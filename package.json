@@ -1,0 +1,49 @@
+{
+  "name": "bowling-kata",
+  "version": "1.0.0",
+  "description": "Bowling Kata",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "joi": "^13.1.2",
+    "js-yaml": "^3.11.0",
+    "mocha": "^5.0.5",
+    "node-cache": "^4.2.0",
+    "winston": "^2.4.1"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "lab": "^14.2.0",
+    "lab-babel": "^1.1.1",
+    "nodemon": "^1.17.3",
+    "nyc": "^11.7.1",
+    "rewire": "^4.0.1"
+  },
+  "engines": {
+    "node": ">=8.11.2s"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "NODE_ENV=dev node index.js",
+    "start:debug": "NODE_ENV=dev NODE_ENV_LOCAL=true nodemon --inspect index.js",
+    "test": "lab -T node_modules/lab-babel ./test/bowling-spec.js",
+    "unittest": "NODE_ENV=test node node_modules/.bin/nyc --reporter=text node_modules/.bin/mocha test/unit --recursive",
+    "unittest:cont": "NODE_ENV=test node node_modules/.bin/nyc --reporter=text node_modules/.bin/mocha test/unit --watch --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://example.com/bowling-kata.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "nyc": {
+    "exclude": [
+      "config/*.js",
+      "src/helpers/response.js"
+    ]
+  }
+}
