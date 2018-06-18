@@ -1,21 +1,38 @@
-import { Game } from '../Game';
+import Game from '../Game';
 
 const Lab  = require('lab'),
       lab = exports.lab = Lab.script(),
-//       describe = lab.describe,
       expect = lab.expect;
-//       it = lab.it;
+let gg = null;
 
-// const { it } = exports.lab = Lab.script();
-// const lab = require('lab');
-// const expect = Lab.expect;
+function rollMany(nn, pins) {
+  for (let ii=nn;ii>=0;ii--) {
+    gg.roll(pins);
+  }
+}
 
-// console.log('it is: ', it);
+lab.beforeEach((done) => {
+  gg = new Game;
+  done();
+});
 
-lab.test('has a game', (done) => {
-  expect(1+1).to.equal(2);
+lab.test('Game exists', (done) => {
+  expect(gg).to.not.be.null;
+  done();
+});
+
+lab.test('All Ones', (done) => {
+  rollMany(20, 1);
+  expect(gg.score()).to.equal(20);
+  done();
+});
+
+lab.test('All Gutter Balls', (done) => {
+  rollMany(20, 0);
+  expect(gg.score()).to.equal(0);
   done();
 })
+
 
 // const gg = new Game();
 
