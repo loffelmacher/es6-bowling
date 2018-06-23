@@ -10,7 +10,7 @@ export default class Game {
 		this._score = 0;
 	}
 	roll(pins) {
-		console.log(`entering Game.roll() frame index is: ${this.currentFrame}`);
+		// console.log(`entering Game.roll() frame index is: ${this.currentFrame}`);
 		// turn starts at 1, human-readable
 		if (this.currentFrame < 10) {
 			this._frames[this.currentFrame].roll(pins);
@@ -35,17 +35,19 @@ class Frame {
 	}
 	roll(pins) {
 		if (this._rollOne == -1) {
-			console.log('setting pins for rollOne');
+			// console.log('setting pins for rollOne');
 			this._rollOne = pins;
 		} else if (this._rollOne != 10 && this._rollTwo == -1) {
-			console.log('setting pins for rollTwo');
+			// console.log('setting pins for rollTwo');
 			this._rollTwo = pins;
 			// console.log(`game is: ${this._game}`);
 			this._game.currentFrame += 1;
 		} else if (this._rollOne == 10) { 
+			// console.log('entering STRIKE condition')
+			// TODO: idk is this a good idea?
 			this._rollTwo = null;
 		} else {
-			console.log('eleseeeeeeee');
+			// console.log('eleseeeeeeee');
 		}
 	}
 	score() {
@@ -57,19 +59,24 @@ class Frame {
 class TenthFrame extends Frame {
 	constructor(game) {
 		super(game);
-		this._rollThree = null;
+		this._rollThree = -1;
 	}
 	roll(pins) {
-		if (this._rollThree == -1) {
+		if (this._rollThree == -1 && (
+				this._rollOne == 10 || 
+				this._rollOne + this._rollTwo == 10
+			)) {
 			this._rollThree = pins;
 			this._game.currentFrame += 1;
+		} else {
+			this._rollThree = 0;
+			super.roll(pins);
 		}
-		// TODO: below is printing twice WHY/////??????
-		console.log('INSIDE TENTHFRAME ROLL');
 
 	}
 	score() {
 		// console.log('INSIDE TENTHFRAME SCORE!');
+		// console.log('scoring TENTH FRAME');
 		return this._rollOne + this._rollTwo + this._rollThree;
 	}
 }
