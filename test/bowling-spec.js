@@ -28,6 +28,14 @@ lab.test('All Ones', (done) => {
   done();
 });
 
+lab.test('Test One Spare', (done) => {
+  gg.roll(3);
+  gg.roll(7);
+  gg.roll(3);
+  rollMany(17, 0);
+  expect(gg.score()).to.equal(16);
+  done();
+});
 
 
 

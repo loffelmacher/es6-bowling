@@ -1,26 +1,22 @@
 export default class Game {
 	constructor() {
+		this.currentFrame = 0;
+		this._score = 0;
 		this._frames = [];
-		
 		for (let ii=0;ii<10;ii++) {
 			this._frames[ii] = new Frame(this);
 		}
 		this._frames[9] = new TenthFrame(this);
-		this.currentFrame = 0;
-		this._score = 0;
 	}
 	roll(pins) {
-		// console.log(`entering Game.roll() frame index is: ${this.currentFrame}`);
-		// turn starts at 1, human-readable
-		if (this.currentFrame < 10) {
-			this._frames[this.currentFrame].roll(pins);
+		if (this.currentFrame < 10) { 		// turn starts at 1, human-readable
+			this._frames[this.currentFrame].roll(pins, this.currentFrame);
 			// TODO: replace naive impl with on using map
 		} 
 	}
 	score() {
 		let retval = 0;
 		this._frames.forEach((ff) => {
-			// console.log(`the score is: ${ff.score()}`);
 			retval += ff.score();
 		});
 		return retval;
@@ -32,27 +28,44 @@ class Frame {
 		this._rollOne = -1;
 		this._rollTwo = -1;
 		this._game = game;
+		this._nextFrame = null;
 	}
-	roll(pins) {
+	roll(pins, ord) {
 		if (this._rollOne == -1) {
-			// console.log('setting pins for rollOne');
 			this._rollOne = pins;
 		} else if (this._rollOne != 10 && this._rollTwo == -1) {
-			// console.log('setting pins for rollTwo');
 			this._rollTwo = pins;
-			// console.log(`game is: ${this._game}`);
 			this._game.currentFrame += 1;
 		} else if (this._rollOne == 10) { 
-			// console.log('entering STRIKE condition')
-			// TODO: idk is this a good idea?
-			this._rollTwo = null;
+			this._rollTwo = null; // TODO: is this correct?
 		} else {
-			// console.log('eleseeeeeeee');
+			console.error('eleseeeeeeee');
+		}
+
+		// see if we set ref to next frame
+		if (pins == 10 || this._rollTwo != -1) {
+			this._nextFrame = 
 		}
 	}
 	score() {
-		// console.log(`what is: {this._rollOne + this._rollTwo`)
-		return this._rollOne + (null ? 0 : this._rollTwo);
+		// this can return null/unknown result when 
+		if (this._isStrike() && this._isScorable()) {
+			return this._rollOne;
+		} else if (this._isSpare() && this._isScorable()) {
+			return this._rollOne + (null ? 0 : this._rollTwo); 
+		} else if (this._isScorable()) {
+			return this._rollOne + (null ? 0 : this._rollTwo); 
+		}
+		return 0;
+	}
+	_isStrike() {
+		return this._rollOne == 10;
+	}
+	_isSpare() {
+		return this._rollOne + this._rollTwo == 10;
+	}
+	_isScorable(){
+		return true;
 	}
 }
 
@@ -75,8 +88,6 @@ class TenthFrame extends Frame {
 
 	}
 	score() {
-		// console.log('INSIDE TENTHFRAME SCORE!');
-		// console.log('scoring TENTH FRAME');
 		return this._rollOne + this._rollTwo + this._rollThree;
 	}
 }
