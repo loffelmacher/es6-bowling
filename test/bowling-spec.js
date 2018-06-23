@@ -6,7 +6,7 @@ const Lab  = require('lab'),
 let gg = null;
 
 function rollMany(nn, pins) {
-  for (let ii=nn;ii>=0;ii--) {
+  for (let ii=nn;ii>0;ii--) {
     gg.roll(pins);
   }
 }
@@ -16,8 +16,9 @@ lab.beforeEach((done) => {
   done();
 });
 
-lab.test('Game exists', (done) => {
-  expect(gg).to.not.be.null;
+lab.test('All Gutter Balls', (done) => {
+  rollMany(20, 0);
+  expect(gg.score()).to.equal(0);
   done();
 });
 
@@ -27,11 +28,6 @@ lab.test('All Ones', (done) => {
   done();
 });
 
-lab.test('All Gutter Balls', (done) => {
-  rollMany(20, 0);
-  expect(gg.score()).to.equal(0);
-  done();
-})
 
 
 

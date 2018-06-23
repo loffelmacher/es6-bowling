@@ -5,20 +5,24 @@ export default class Game {
 		for (let ii=0;ii<10;ii++) {
 			this._frames[ii] = new Frame();
 		}
-		// this._frames[9] = new TenthFrame();
+		this._frames[9] = new TenthFrame();
 		this._turn = 1;
 		this._score = 0;
 	}
 	roll(pins) {
-		if (this._turn < 10) {
-			this._frames[this._turn].roll(pins);
+		if (this._turn <= 10) {
+			this._frames[this._turn-1].roll(pins);
 			this._turn++;
-		} else {
-			console.log('turn is still low: ', _turn);
-		}
+		} 
 	}
 	score() {
-		return 0;
+		let retval = 0;
+		this._frames.forEach((ff) => {
+			// console.log('key: ', k);
+			// console.log('val: ', v);
+			retval += ff.score();
+		});
+		return retval;
 	}
 }
 
