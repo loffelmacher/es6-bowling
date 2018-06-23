@@ -1,15 +1,21 @@
 export default class Game {
 	constructor() {
-		this.frames = [10];
-		this.tenthFrame = null;
+		this._frames = [];
 		
-		for (let ii=0;ii<this.frames.length;ii++) {
-			this.frames[ii] = new Frame();
+		for (let ii=0;ii<10;ii++) {
+			this._frames[ii] = new Frame();
 		}
-		this.tenthFrame = new Frame();
+		// this._frames[9] = new TenthFrame();
+		this._turn = 1;
+		this._score = 0;
 	}
 	roll(pins) {
-		return true;
+		if (this._turn < 10) {
+			this._frames[this._turn].roll(pins);
+			this._turn++;
+		} else {
+			console.log('turn is still low: ', _turn);
+		}
 	}
 	score() {
 		return 0;
@@ -18,30 +24,29 @@ export default class Game {
 
 class Frame {
 	constructor() {
-		this.rollOne = new Roll();
-		this.rollTwo = new Roll();
+		this._rollOne = -1;
+		this._rollTwo = -1;
+	}
+	roll(pins) {
+		if (this._rollOne != -1) {
+			this._rollOne = pins;
+		} else if (this._rollOne != 10 && this._rollTwo != -1) {
+			this._rollTwo = pins;
+		} else {
+			this._nextFrame = -1; // not right!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		}
 	}
 	score() {
-		return 0;
+		return this._rollOne + this._rollTwo;
 	}
 }
 
 class TenthFrame extends Frame {
 	constructor() {
 		super();
-		this.rollThree = new Roll();
+		this._rollThree = null;
 	}
 	score() {
 		return 0;
-	}
-}
-
-class Roll {
-	constructor() {
-		console.log('constructing a roll');
-		this.pins = 0;
-	}
-	roll(pins) {
-		this.pins = pins;
 	}
 }
