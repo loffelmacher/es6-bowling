@@ -53,3 +53,10 @@ lab.test('Test One Strike', (done) => {
   expect(gg.score()).to.equal(24);
   done();
 });
+
+lab.test('Test Perfect Game', (done) => {
+  rollMany(12, 10);
+  console.log('SCORED: ', gg.score());
+  expect(gg.score()).to.equal(300);
+  done();
+});
