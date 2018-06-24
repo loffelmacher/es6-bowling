@@ -11,6 +11,11 @@ function rollMany(nn, pins) {
   }
 }
 
+function rollSpare() {
+  gg.roll(5);
+  gg.roll(5);
+}
+
 lab.beforeEach((done) => {
   gg = new Game;
   done();
@@ -29,8 +34,7 @@ lab.test('All Ones', (done) => {
 });
 
 lab.test('Test One Spare', (done) => {
-  gg.roll(5);
-  gg.roll(5);
+  rollSpare();
   gg.roll(3);
   rollMany(17, 0);
   expect(gg.score()).to.equal(16);
