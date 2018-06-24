@@ -16,6 +16,10 @@ function rollSpare() {
   gg.roll(5);
 }
 
+function rollStrike() {
+  gg.roll(10);
+}
+
 lab.beforeEach((done) => {
   gg = new Game;
   done();
@@ -42,7 +46,7 @@ lab.test('Test One Spare', (done) => {
 });
 
 lab.test('Test One Strike', (done) => {
-  gg.roll(10);
+  rollStrike(); // strike
   gg.roll(3);
   gg.roll(4);
   rollMany(16, 0);
