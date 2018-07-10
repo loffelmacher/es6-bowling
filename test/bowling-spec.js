@@ -60,9 +60,3 @@ lab.test('Test Perfect Game', (done) => {
   expect(gg.score()).to.equal(300);
   done();
 });
-
-lab.test('Longer Test #1', (done) => {
-  gg.roll(3);
-  gg.roll(3);
-  gg.rollSpare();
-});
